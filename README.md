@@ -12,4 +12,5 @@ Este sitio web ofrece una guía informativa sobre las principales atracciones tu
 
 ## Diagrama Entidad-Relación
 El diagrama tiene una relación de forma tal que una atraccion pertenece solo a un pais, mientras que un pais puede contener N cantidad de atracciones.
+
 ![Diagrama de Entidad-Relacion](DiagramaEntidad-Relacion.png)
