@@ -1,0 +1,10 @@
+<div class="pt-4 pl-4">
+    <a class=" btn btn-danger m-1" href="<?php echo BASE_URL . "atracciones" ?>">
+        Todos
+    </a>
+    <?php foreach ($countries as $country): ?>
+        <a class="btn btn-danger m-1" href="<?php echo BASE_URL . 'atracciones-por-pais/' . $country->name ?>"> <?php echo htmlspecialchars($country->name); ?></a>
+    <?php endforeach; ?>
+</div>
+</div>
+

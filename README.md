@@ -14,3 +14,48 @@ Este sitio web ofrece una guía informativa sobre las principales atracciones tu
 El diagrama tiene una relación de forma tal que una atraccion pertenece solo a un pais, mientras que un pais puede contener N cantidad de atracciones.
 
 ![Diagrama de Entidad-Relacion](DiagramaEntidad-Relacion.png)
+
+/project-root
+    /app
+        /controllers
+            attractions.controller.php
+                
+            auth.controller.php
+               
+            country.controller.php
+                
+        /helpers
+        /models
+            attractions.model.php
+                
+            country.model.php
+                
+            db.model.php
+                
+            user.model.php
+                
+        /views
+           
+    /config
+        config.php
+    /database
+        destinos_turisticos.sql
+    /templates
+        /attractions
+            form-addAttraction.phtml
+            form-updateAttraction.phtml
+            showAttractions.phtml
+            showAttractionDetail.phtml
+        /countries
+            form-addCountry.phtml
+            form-updateCountry.phtml
+            showCountries.phtml
+            showCountryDetail.phtml
+        /layout
+            error.phtml
+            footer.phtml
+            header.phtml
+            succes.phtml
+        /users
+            form-login.phtml        
+    /router.php

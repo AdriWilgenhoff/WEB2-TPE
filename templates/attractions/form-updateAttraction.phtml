@@ -1,0 +1,65 @@
+<form action="<?php echo BASE_URL . 'actualizar-atraccion/' . $attraction->id; ?>" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center p-4">
+    <div class="card" style="width: 60%;">
+        <div class="card-body">
+            <h5 class="card-title text-center">Modificar Atracción</h5>
+
+            <div class="mb-3">
+                <label for="path_img" class="form-label">Imagen</label>
+                <input class="form-control" type="file" accept=".png, .jpg, .jpeg" name="path_img" value="<?php echo $attraction->path_img; ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input class="form-control" maxlength="100" type="text" name="name" value="<?php echo $attraction->name; ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" maxlength="1000" name="description" rows="5" required><?php echo $attraction->description; ?></textarea>
+            </div>
+
+			<label for="horarios" class="form-label">Horarios</label>
+            <div class="mb-3 d-flex align-items-center">
+                <input class="form-control me-2" type="time" name="open_time" value="<?php echo $attraction->open_time; ?>" required>
+                <span>-</span>
+                <input class="form-control ms-2" type="time" name="close_time" value="<?php echo $attraction->close_time; ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio</label>
+                <input class="form-control" type="number" min="0" step="0.01" name="price" value="<?php echo $attraction->price; ?>" required>
+            </div>
+			
+			<div class="mb-3">
+                <label for="price" class="form-label">Dirección</label>
+                <input class="form-control" type="text" maxlength="255" name="location" value="<?php echo $attraction->location; ?>" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="website" class="form-label">Página Oficial</label>
+                <input class="form-control" type="text" name="website" maxlength="255" value="<?php echo $attraction->website; ?>" required>
+            </div>
+
+            <input type="hidden" name="id" value="<?php echo $attraction->id; ?>">
+
+            <div class="mb-3">
+                <label for="country_id" class="form-label">País</label>
+                <select name="country_id" class="form-select" required >
+                    <?php if (!empty($countries)): ?>
+                        <?php foreach ($countries as $country): ?>
+                            <option value="<?php echo $country->id; ?>" <?php if ($country->id == $attraction->country_id) echo 'selected'; ?>>
+                                <?php echo htmlspecialchars($country->name); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="">No hay países disponibles</option>
+                    <?php endif; ?>
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger">Modificar</button>
+            </div>
+        </div>
+    </div>
+</form>

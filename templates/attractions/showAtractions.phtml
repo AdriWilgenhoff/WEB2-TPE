@@ -1,0 +1,29 @@
+<div>
+    <div style="padding:20px;display:flex; justify-content:space-between">
+        <!-- <h3>Mirá nuestras atracciones</h3> -->
+		<?php if (isset($_SESSION['USER_ID'])) :?>
+        <a href="<?php echo BASE_URL . 'nueva-atraccion' ?>" type="button" class="btn btn-danger" style="border-radius:25px">AGREGAR ATRACCION</a>
+		<?php endif ?>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4 g-4 p-4" style="background-color:#ffffff; ">
+
+        <?php foreach ($attractions as $attraction) { ?>
+            <div class="col">
+                <div class="card h-100">
+                    <!-- este botonn no se muestra a usuarios comunes -->
+					<?php if (isset($_SESSION['USER_ID'])) :?>
+                    <a href="<?php echo BASE_URL . 'eliminar-atraccion/' . $attraction->id ?>" style="display:flex; position:absolute; left: 91%; " type="button" class="btn btn-danger btn-sm">X</a>
+					<?php endif ?>
+                    <img src="<?php echo $attraction->path_img; ?>" class="card-img-top" style="height: 200px; object-fit: cover ">
+
+                    <div class="card-body d-flex justify-content-between mb-2 align-items-center">
+                        <h5 class="card-title"><?php echo $attraction->name; ?></h5>
+                        <!-- <p class="card-text">Dos renglones de descripcion, ver si necesitamos una columna en la tabla para este abstract</p> -->
+                        <a href="<?php echo BASE_URL . 'atraccion/' . $attraction->id ?>" class="btn  d-flexd" style="background-color:#33e0a1;">ir</a>
+                    </div>
+
+                </div>
+            </div>
+        <?php  } ?>
+    </div>
+</div>

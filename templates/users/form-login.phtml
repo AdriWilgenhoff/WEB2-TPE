@@ -1,0 +1,19 @@
+<div class="card-body" style=" display:flex; justify-content:center; padding:50px">
+  <div class="card" style="width: 50%; padding:30px;">
+    <form method="POST" action="<?php echo BASE_URL . 'autenticar'?>">
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Usuario </label>
+        <input  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
+        <div id="emailHelp" class="form-text">vamos a compartir este nombre de usuario con todo el mundo</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+      </div>
+      
+      <button type="submit" class="btn btn-danger">Ingresar</button>
+
+    </form>
+  </div>
+</div>
