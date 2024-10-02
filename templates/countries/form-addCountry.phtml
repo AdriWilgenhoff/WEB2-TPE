@@ -1,6 +1,6 @@
 <form action="<?php echo BASE_URL . 'crear-pais/' ?>" method="POST" class="d-flex justify-content-center p-4">
     <div class="card" style="width: 60%; padding: 30px;">
-        <h5 class="card-title text-center">Agregar Nuevo Pais</h5>
+        <h5 class="card-title text-center">Agregar Nuevo País</h5>
 
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
@@ -9,7 +9,7 @@
 
         <div class="mb-3">
             <label for="descripcion" class="form-label">Moneda</label>
-            <input class="form-control" maxlength="50" name="currency" rows="3" required></input>
+            <input class="form-control" maxlength="50" name="currency" required>
         </div>
               
         <div class="mb-3">
@@ -18,10 +18,11 @@
         </div>
 
         <input type="hidden" name="id" value="">
-        <div id="emailHelp" class="form-text mb-3">*Todos los datos deben estar completos para agregar el pais*</div>
+        <div id="emailHelp" class="form-text mb-3">*Todos los datos deben estar completos para agregar el país*</div>
 
         <div class="text-center">
             <button type="submit" class="btn btn-danger">Agregar</button>
+            <a href="<?php echo BASE_URL . 'paises'; ?>" class="btn btn-secondary ms-2">Cancelar</a>
         </div>
     </div>
 </form>

@@ -3,12 +3,10 @@
 class LayoutView {
     private $countriesModel;
 
-    public function showExito() {
-        require './templates/layout/succes.phtml';
-    }
-
     public function showError($error)    {
+		require './templates/layout/header.phtml';
         require './templates/layout/error.phtml';
+		require './templates/layout/footer.phtml';
     }
 	
     public function showError404(){

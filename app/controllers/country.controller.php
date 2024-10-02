@@ -17,10 +17,10 @@ class CountryController
         $this->layoutView = new LayoutView();
     }
 
-    function showCountries(){
+    function showCountries($message = null){
         AuthHelper::verify();
         $countries = $this->countryModel->getCountries();
-        $this->countryView->showCountries($countries);
+        $this->countryView->showCountries($countries,$message);
     }
 
 	function deleteCountry($id){
@@ -32,6 +32,8 @@ class CountryController
 			$attractions = $attractionsByCountry->getAttractionByCountry($country->name);
             if (!empty($attractions)) {
                 $this->layoutView->showError('No es posible eliminar. El pais tiene atracciones.');
+				//$countries = $this->countryModel->getCountries();
+				//$this->showCountries($countries,'No es posible eliminar. El pais tiene atracciones.');
             } else {
                 $this->countryModel->deleteCountry($id);
 				header('Location: ' . BASE_URL . 'paises');

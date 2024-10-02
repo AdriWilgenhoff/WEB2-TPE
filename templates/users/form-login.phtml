@@ -2,14 +2,21 @@
   <div class="card" style="width: 50%; padding:30px;">
     <form method="POST" action="<?php echo BASE_URL . 'autenticar'?>">
 
+      <?php if (isset($message) && !empty($message)): ?>
+        <div class="alert alert-danger" role="alert">
+          <?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>
+        </div>
+      <?php endif; ?>
+
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Usuario </label>
-        <input  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username">
-        <div id="emailHelp" class="form-text">vamos a compartir este nombre de usuario con todo el mundo</div>
+        <label for="username" class="form-label">Usuario </label>
+        <input type="text" class="form-control" name="username" required>
+        <div class="form-text">Vamos a compartir este nombre de usuario con todo el mundo</div>
       </div>
+      
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" name="password" required>
       </div>
       
       <button type="submit" class="btn btn-danger">Ingresar</button>

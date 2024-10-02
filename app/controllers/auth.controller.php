@@ -25,8 +25,6 @@
 		}
 		
 		public function auth() {
-			$hashedPassword = password_hash("admin", PASSWORD_DEFAULT);
-			var_dump($hashedPassword);
 			if(!empty($_POST['username']) && !empty($_POST['password'])){
 				$username = $_POST['username'];
 				$password = $_POST['password'];    
@@ -35,10 +33,12 @@
 					AuthHelper::login($user);
 					header('Location: '.BASE_URL);
 				} else{
-					$this->layoutView->showError("Usuario y/o clave incorrecta");
+					$this->showLogin("Usuario y/o clave incorrecta");
+					//$this->layoutView->showError("Usuario y/o clave incorrecta");
 				}
 			} else{
-				$this->layoutView->showError("Debe completar correctamente los campos");
+				$this->showLogin("Debe completar correctamente los campos");
+				//$this->layoutView->showError("Debe completar correctamente los campos");
 			}
 		}
 

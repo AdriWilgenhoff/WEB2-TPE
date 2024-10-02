@@ -1,28 +1,26 @@
 <div class="p-4">
-    <div class="d-flex justify-content-end mb-3"> <!-- Añadido mb-3 para separar el botón de la tabla -->
+    <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-danger" href="<?php echo BASE_URL . 'nuevo-pais' ?>">Agregar</a>
     </div>
 
-    <div class="table-responsive col-md-8 mx-auto"> <!-- Ajustar el tamaño de la tabla y centrarla -->
-        <table class="table table-bordered text-center"> <!-- Añadido text-center para centrar el contenido -->
+    <div class="table-responsive col-md-8 mx-auto">
+        <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Moneda de curso legal</th>
                     <th scope="col">Idioma</th>
-                    <th scope="col">Acciones</th> <!-- Encabezado para las acciones -->
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($countries as $country) : ?>
                     <tr>
-                        <th scope="row"><?php echo $country->id ?></th>
                         <td><?php echo $country->name ?></td>
                         <td><?php echo $country->currency ?></td>
                         <td><?php echo $country->language ?></td>
                         <td>
-                            <div class="btn-group" role="group"> <!-- Grupo de botones -->
+                            <div class="btn-group" role="group">
                                 <a class="btn btn-danger me-2 rounded" href="<?php echo BASE_URL . 'editar-pais/' . $country->id ?>">Editar</a>
                                 <a class="btn btn-danger rounded" href="<?php echo BASE_URL . 'eliminar-pais/' . $country->id ?>">Eliminar</a>
                             </div>

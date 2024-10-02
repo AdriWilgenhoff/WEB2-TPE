@@ -1,11 +1,11 @@
 <?php
 class CountryView{
 
-    public function showCountries($countries){
-        require './templates/layout/header.phtml';        
-        require './templates/countries/showCountries.phtml';
-        require './templates/layout/footer.phtml';
-    }
+    public function showCountries($countries, $message = null) {
+		require './templates/layout/header.phtml';        
+		require './templates/countries/showCountries.phtml';
+		require './templates/layout/footer.phtml';
+	}
 
     public function showCountry($country){
         require './templates/layout/header.phtml'; 

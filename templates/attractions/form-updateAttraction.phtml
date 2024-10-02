@@ -18,7 +18,7 @@
                 <textarea class="form-control" maxlength="1000" name="description" rows="5" required><?php echo $attraction->description; ?></textarea>
             </div>
 
-			<label for="horarios" class="form-label">Horarios</label>
+            <label for="horarios" class="form-label">Horarios</label>
             <div class="mb-3 d-flex align-items-center">
                 <input class="form-control me-2" type="time" name="open_time" value="<?php echo $attraction->open_time; ?>" required>
                 <span>-</span>
@@ -29,9 +29,9 @@
                 <label for="price" class="form-label">Precio</label>
                 <input class="form-control" type="number" min="0" step="0.01" name="price" value="<?php echo $attraction->price; ?>" required>
             </div>
-			
-			<div class="mb-3">
-                <label for="price" class="form-label">Dirección</label>
+            
+            <div class="mb-3">
+                <label for="location" class="form-label">Dirección</label>
                 <input class="form-control" type="text" maxlength="255" name="location" value="<?php echo $attraction->location; ?>" required>
             </div>
 
@@ -44,7 +44,7 @@
 
             <div class="mb-3">
                 <label for="country_id" class="form-label">País</label>
-                <select name="country_id" class="form-select" required >
+                <select name="country_id" class="form-select" required>
                     <?php if (!empty($countries)): ?>
                         <?php foreach ($countries as $country): ?>
                             <option value="<?php echo $country->id; ?>" <?php if ($country->id == $attraction->country_id) echo 'selected'; ?>>
@@ -59,6 +59,7 @@
 
             <div class="text-center">
                 <button type="submit" class="btn btn-danger">Modificar</button>
+                <a href="<?php echo BASE_URL . 'atraccion/' . $attraction->id; ?>" class="btn btn-secondary ms-2">Cancelar</a>
             </div>
         </div>
     </div>

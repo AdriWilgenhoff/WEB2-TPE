@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 - Página No Encontrada</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="error-container">
-        <h1>Error 404</h1>
-        <p>Lo sentimos, la página que buscas no se ha encontrado.</p>
-        <a href="/" class="back-home">Volver al inicio</a>
-    </div>
-</body>
-</html>
+<div class="container text-center mt-5">
+       <div class="alert alert-danger" role="alert">
+            <h1 class="display-4">Error 404</h1>
+            <p class="mt-3">Lo sentimos, no hemos podido encontrar la página que buscas.</p>
+            <a href="<?php echo BASE_URL . 'atracciones'; ?>" class="btn btn-primary">Volver al Inicio</a>
+       </div>
+</div>
