@@ -18,24 +18,23 @@ El diagrama tiene una relación de forma tal que una atraccion pertenece solo a 
 /project-root
     /app
         /controllers
-            attractions.controller.php
-                
+            attractions.controller.php       
             auth.controller.php
-               
             country.controller.php
                 
         /helpers
         /models
-            attractions.model.php
-                
-            country.model.php
-                
-            db.model.php
-                
+            attractions.model.php         
+            country.model.php         
+            db.model.php            
             user.model.php
                 
         /views
-           
+			attractions.view.php
+			country.view.php
+			layout.view.php
+			users.view.php
+    /images     
     /config
         config.php
     /database

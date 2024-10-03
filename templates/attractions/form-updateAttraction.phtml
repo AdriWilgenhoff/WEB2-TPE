@@ -9,16 +9,16 @@
             </div>
 
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="name" class="form-label">Nombre</label>
                 <input class="form-control" maxlength="100" type="text" name="name" value="<?php echo $attraction->name; ?>" required>
             </div>
 
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
+                <label for="description" class="form-label">Descripción</label>
                 <textarea class="form-control" maxlength="1000" name="description" rows="5" required><?php echo $attraction->description; ?></textarea>
             </div>
 
-            <label for="horarios" class="form-label">Horarios</label>
+            <label for="schedules" class="form-label">Horarios</label>
             <div class="mb-3 d-flex align-items-center">
                 <input class="form-control me-2" type="time" name="open_time" value="<?php echo $attraction->open_time; ?>" required>
                 <span>-</span>

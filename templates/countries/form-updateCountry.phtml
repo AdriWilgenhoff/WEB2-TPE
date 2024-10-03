@@ -4,22 +4,22 @@
             <h5 class="card-title text-center">Modificar País</h5>      
 
             <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="name" class="form-label">Nombre</label>
                 <input class="form-control" type="text" maxlength="50" name="name" value="<?php echo $country->name ?>" required>
             </div>
 
             <div class="mb-3">
-                <label for="descripcion" class="form-label">Moneda</label>
+                <label for="currency" class="form-label">Moneda</label>
                 <input class="form-control" maxlength="50" name="currency" value="<?php echo $country->currency ?>" required>
             </div>
                   
             <div class="mb-3">
-                <label for="price" class="form-label">Idioma</label>
+                <label for="language" class="form-label">Idioma</label>
                 <input required class="form-control" maxlength="50" value="<?php echo $country->language ?>" name="language">
             </div>
 
             <input type="hidden" name="id" value="<?php echo $country->id; ?>">
-            <div id="emailHelp" class="form-text mb-3">*Todos los datos deben estar completos para modificar el país*</div>
+            <div class="form-text mb-3">*Todos los datos deben estar completos para modificar el país*</div>
 
             <div class="text-center">
                 <button type="submit" class="btn btn-danger">Modificar</button>

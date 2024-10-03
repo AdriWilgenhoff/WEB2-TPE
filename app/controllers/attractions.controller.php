@@ -40,9 +40,11 @@ class AttractionsController
             if ($id) {
                 header('Location: ' . BASE_URL);
             } else {
-                $this->layoutView->showError('Error al insertar atraccion');
+                $this->layoutView->showError('No se pudo agregar la atracción');
             }
-        }else{$this->layoutView->showError404();}
+        }else{
+				$this->layoutView->showError('No se pudo agregar la atracción. Faltan completar datos');
+			}
     }
 
 
@@ -50,7 +52,7 @@ class AttractionsController
 		AuthHelper::verify();
         $attraction = $this->attractionModel->getAttractionById($id);
         if (!$attraction)
-            return $this->layoutView->showError("No existe la atraccion con el id=$id");
+            return $this->layoutView->showError("No se pudo eliminar, la atracción no existe");
         $this->attractionModel->deleteAttraction($id);
         header('Location: ' . BASE_URL);
     }
@@ -74,9 +76,11 @@ class AttractionsController
             if ($id) {        
                 header('Location: ' . BASE_URL . "atraccion/" . $attractionId);
             } else {
-                $this->layoutView->showError('algo no salio como esperabamos');
+                $this->layoutView->showError('No se pudo editar la atracción');
             }
-        }
+        }else{
+				$this->layoutView->showError('No se pudo editar la atracción, faltan completar datos');
+			}
     }
 
 
@@ -90,9 +94,8 @@ class AttractionsController
     public function showFormUpdateAttraction($id){
 		AuthHelper::verify();
         $attraction = $this->attractionModel->getAttractionById($id);
-
         if (!$attraction) {
-            return $this->layoutView->showError("No existe la atraccion con el id=$id");
+            return $this->layoutView->showError("No existe la atracción");
         }
         $countries = $this->countryModel->getCountries();
         return $this->attractionsView->showFormUpdate($attraction, $countries);
@@ -109,9 +112,9 @@ class AttractionsController
     }
 
 
-    public function filterByCountry($countryID){
+    public function filterByCountry($country){
         $countries = $this->countryModel->getCountries();
-        $attractions = $this->attractionModel->getAttractionByCountry($countryID);
+        $attractions = $this->attractionModel->getAttractionByCountry($country);
         return $this->attractionsView->showAllAtractions($attractions,$countries);    
     }
    

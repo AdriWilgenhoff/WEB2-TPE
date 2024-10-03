@@ -2,29 +2,23 @@
   <div class="p-4" style="height: 100%;">
     <div class="card mb-3" style="max-width: 100%;">
       <div class="row g-0">
-        <!-- Columna de la imagen (50%) -->
         <div class="col-md-6" style="width: 50%;">
-          <img src="<?php echo BASE_URL . $attraction->path_img; ?>" class="img-fluid rounded-start w-100" style="height: 100%; object-fit: cover;" alt="Imagen de la atracción">
+          <img src="<?php echo BASE_URL . $attraction->path_img; ?>" class="img-fluid rounded-start w-100" style="height: 100%; object-fit: cover;">
         </div>
-        <!-- Columna del contenido (50%) -->
         <div class="col-md-6" style="width: 50%;">
           <div class="card-body">
             <div class="d-flex justify-content-between mb-2">
-              <!-- Título y Badge -->
               <h3 class="fw-bold mb-0">
                 <?php echo $attraction->name; ?>
                 <span class="badge bg-secondary align-text-top fs-6"><?php echo $attraction->country; ?></span>
               </h3>
-              <!-- Botón de edición -->
               <?php if (isset($_SESSION['USER_ID'])) : ?>
                 <a href="<?php echo BASE_URL . 'editar-atraccion/' . $attraction->id; ?>" class="btn btn-danger btn-sm">✏️</a>
               <?php endif; ?>
             </div>
 
-            <!-- Descripción de la atracción -->
             <p class="card-text"><?php echo $attraction->description; ?></p>
 
-            <!-- Horarios de atención en una sola línea -->
             <div class="d-flex align-items-center">
               <h5 class="me-2 mb-0">Horarios de atención:</h5>
               <h6 class="mb-0"><?php echo $attraction->open_time; ?></h6>
@@ -32,19 +26,16 @@
               <h6 class="mb-0"><?php echo $attraction->close_time; ?></h6>
             </div>
 
-            <!-- Precio sin negrita -->
             <div class="d-flex align-items-center mt-3">
               <h5><?php echo $attraction->currency; ?>:</h5>
               <h5 class="ms-2"><?php echo $attraction->price; ?></h5>
             </div>
 
-            <!-- Ubicación sin negrita -->
             <div class="d-flex align-items-center gap-2 my-3">
               <h5 class="mb-0">📍</h5>
               <h5 class="mb-0"><?php echo $attraction->location; ?></h5>
             </div>
 
-            <!-- Página oficial -->
             <a href="<?php echo $attraction->website; ?>" target="_blank" class="btn btn-success">
               Visita la página oficial
             </a>

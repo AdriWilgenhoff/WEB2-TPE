@@ -40,12 +40,14 @@ class AttractionModel extends Model {
 
     function updateAttraction($name, $location, $price, $path_img= null, $description, $open_time, $close_time, $website, $country_id, $id) {
 		$pathImg = null;
-		if ($path_img)
+		if ($path_img){
             $pathImg = $this->uploadImage($path_img);
-		else
-			$pathImg = "images/imagen-no-disponible.png";
-        $query = $this->db->prepare("UPDATE attractions SET name = ?, location = ?, price = ? , path_img = ?, description = ?, open_time = ?, close_time = ?, website = ?, country_id = ? WHERE id = ?");
-        $query->execute([$name, $location, $price, $pathImg, $description, $open_time, $close_time, $website, $country_id, $id]);
+			$query = $this->db->prepare("UPDATE attractions SET name = ?, location = ?, price = ? , path_img = ?, description = ?, open_time = ?, close_time = ?, website = ?, country_id = ? WHERE id = ?");
+			$query->execute([$name, $location, $price, $pathImg, $description, $open_time, $close_time, $website, $country_id, $id]);
+		}else{
+			$query = $this->db->prepare("UPDATE attractions SET name = ?, location = ?, price = ? , description = ?, open_time = ?, close_time = ?, website = ?, country_id = ? WHERE id = ?");
+			$query->execute([$name, $location, $price, $description, $open_time, $close_time, $website, $country_id, $id]);
+		}
 		return $id;
     }
 	

@@ -5,7 +5,8 @@ class CountryModel extends Model{
     
     //Recupera Paises
     public function getCountries(){
-        $query = $this->db->prepare("SELECT * FROM countries");
+        //$query = $this->db->prepare("SELECT * FROM countries");
+		$query = $this->db->prepare("SELECT c.* , COUNT(a.country_id) AS count_attractions FROM countries c LEFT JOIN attractions a ON a.country_id = c.id GROUP BY c.id");
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);       
     }

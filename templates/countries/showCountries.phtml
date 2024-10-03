@@ -22,7 +22,7 @@
                         <td>
                             <div class="btn-group" role="group">
                                 <a class="btn btn-danger me-2 rounded" href="<?php echo BASE_URL . 'editar-pais/' . $country->id ?>">Editar</a>
-                                <a class="btn btn-danger rounded" href="<?php echo BASE_URL . 'eliminar-pais/' . $country->id ?>">Eliminar</a>
+                                <a class="btn btn-danger rounded <?php if($country->count_attractions > 0) echo 'disabled'; ?>"  href="<?php echo BASE_URL . 'eliminar-pais/' . $country->id ?>">Eliminar</a>
                             </div>
                         </td>
                     </tr>

@@ -5,19 +5,17 @@
 		<?php endif ?>
     </div>
     <div class="row row-cols-1 row-cols-md-4 g-4 p-4" style="background-color:#ffffff; ">
-
         <?php foreach ($attractions as $attraction) { ?>
             <div class="col">
                 <div class="card h-100">
 					<?php if (isset($_SESSION['USER_ID'])) :?>
                     <a href="<?php echo BASE_URL . 'eliminar-atraccion/' . $attraction->id ?>" style="display:flex; position:absolute; left: 91%; " type="button" class="btn btn-danger btn-sm">X</a>
 					<?php endif ?>
-                    <img src="<?php echo $attraction->path_img; ?>" class="card-img-top" style="height: 200px; object-fit: cover ">
+                    <img src="<?php echo BASE_URL . $attraction->path_img; ?>" class="card-img-top" style="height: 200px; object-fit: cover ">
                     <div class="card-body d-flex justify-content-between mb-2 align-items-center">
                         <h5 class="card-title"><?php echo $attraction->name; ?></h5>
-                        <a href="<?php echo BASE_URL . 'atraccion/' . $attraction->id ?>" class="btn  d-flexd" style="background-color:#33e0a1;">Ir</a>
+                        <a href="<?php echo BASE_URL . 'atraccion/' . $attraction->id ?>" class="btn d-flexd" style="background-color:#33e0a1;">Ir</a>
                     </div>
-
                 </div>
             </div>
         <?php  } ?>

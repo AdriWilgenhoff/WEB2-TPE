@@ -17,29 +17,26 @@ class CountryController
         $this->layoutView = new LayoutView();
     }
 
-    function showCountries($message = null){
+    function showCountries(){
         AuthHelper::verify();
         $countries = $this->countryModel->getCountries();
-        $this->countryView->showCountries($countries,$message);
+        $this->countryView->showCountries($countries);
     }
 
 	function deleteCountry($id){
-        //Valido que el pais exista
         $country = $this->countryModel->getCountryById($id);
         if (!empty($country)) {
-            //Valido que el pais no tenga Atracciones
             $attractionsByCountry = new AttractionModel();
 			$attractions = $attractionsByCountry->getAttractionByCountry($country->name);
             if (!empty($attractions)) {
                 $this->layoutView->showError('No es posible eliminar. El pais tiene atracciones.');
-				//$countries = $this->countryModel->getCountries();
-				//$this->showCountries($countries,'No es posible eliminar. El pais tiene atracciones.');
+				header('Refresh: 5; URL=' . BASE_URL . 'paises');
             } else {
                 $this->countryModel->deleteCountry($id);
 				header('Location: ' . BASE_URL . 'paises');
             }
         } else 
-            $this->layoutView->showError('No es posible eliminar. El pais no existe.');    
+            $this->layoutView->showError('No se pudo eliminar, el pais no existe');    
     }
   
   
@@ -53,13 +50,13 @@ class CountryController
 				if ($id) {
 					header('Location: ' . BASE_URL . 'paises');
 				} else {
-					$this->layoutView->showError('Error al insertar pais.');
+					$this->layoutView->showError('No se pudo agregar pais.');
 				}
 			} else {
-				$this->layoutView->showError('Error al insertar pais. El nombre ya existe');
+				$this->layoutView->showError('No se pudo agregar pais. El nombre ya existe');
 			}
         } else {
-			$this->layoutView->showError('Error al insertar pais. Falta completar datos');
+			$this->layoutView->showError('No se pudo agregar pais, faltan completar datos');
 		  } 
     }
 
@@ -67,11 +64,12 @@ class CountryController
     function updateCountry($id){
         AuthHelper::verify();
         $validation = $this->validateAndSanitizeFields(['name','language','currency']);
-		//Verificar el nombre FALTA
         if($validation){
-            $this->countryModel->updateCountry($_POST['name'],$_POST['language'],$_POST['currency'], $id);
-            header('Location: ' . BASE_URL . 'paises');
-        }   
+			$this->countryModel->updateCountry($_POST['name'],$_POST['language'],$_POST['currency'], $id);
+			header('Location: ' . BASE_URL . 'paises');
+        }else {
+			$this->layoutView->showError('No se pudo modificar pais, faltan completar datos');
+		  }  
     }
 
 

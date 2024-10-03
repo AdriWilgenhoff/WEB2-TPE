@@ -29,16 +29,17 @@
 				$username = $_POST['username'];
 				$password = $_POST['password'];    
 				$user = $this->userModel->getUser($username);
-				if($password && password_verify($password,$user->password)){
-					AuthHelper::login($user);
-					header('Location: '.BASE_URL);
-				} else{
+				if ($user){
+					if($password && password_verify($password,$user->password)){
+						AuthHelper::login($user);
+						header('Location: '.BASE_URL);
+					} else{
+						$this->showLogin("Usuario y/o clave incorrecta");
+					}
+				}else 
 					$this->showLogin("Usuario y/o clave incorrecta");
-					//$this->layoutView->showError("Usuario y/o clave incorrecta");
-				}
 			} else{
-				$this->showLogin("Debe completar correctamente los campos");
-				//$this->layoutView->showError("Debe completar correctamente los campos");
+				$this->showLogin("Debe completar todos los campos");
 			}
 		}
 
