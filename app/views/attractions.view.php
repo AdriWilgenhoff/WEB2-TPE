@@ -2,14 +2,17 @@
 
 class AttractionsView {
 
-    public function showAllAtractions($attractions,$countries){
+    public function showAllAtractions($attractions,$countries,$selectedCountry,$error){
         require './templates/layout/header.phtml';
-        require './templates/layout/menuCountries.phtml'       ;
+        require './templates/layout/menuCountries.phtml';
+        if($error){
+            include_once './templates/layout/boxError.phtml';
+        }
         require './templates/attractions/showAtractions.phtml';
         require './templates/layout/footer.phtml';
     }
 
-    public function showAttractionsByCountry($attraction){
+    public function showAttractionsByCountry($attraction,$error){
         require './templates/layout/header.phtml';       
         require './templates/attractions/showAtractions.phtml';
         require './templates/layout/footer.phtml';

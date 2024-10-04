@@ -18,4 +18,8 @@ class LayoutView {
     public function showCountryMenu(){
         require './templates/layout/menuCountries.phtml';
     }
+
+    public function showBoxError($error){        
+        require './templates/layout/boxError.phtml';		
+    }
 }

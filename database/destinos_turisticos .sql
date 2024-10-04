@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2024 at 05:56 AM
+-- Generation Time: Oct 03, 2024 at 07:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,32 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `destinos_turisticos`
 --
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `countries`
---
-
-CREATE TABLE `countries` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `language` varchar(50) NOT NULL,
-  `currency` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `countries`
---
-
-INSERT INTO `countries` (`id`, `name`, `language`, `currency`) VALUES
-(1, 'Inglaterra', 'Inglés', 'Libra Esterlina (£)'),
-(2, 'Francia', 'Francés', 'Euro (€)'),
-(4, 'Italia', 'Italiano', 'Euro (€)'),
-(14, 'Argentina', 'Español', 'Peso Argentino ($)'),
-(15, 'Mexico', 'Español', 'Peso Mexicano ($)'),
-(19, 'Chile', 'Español', 'Pesos Chileno ($)');
 
 -- --------------------------------------------------------
 
@@ -78,6 +52,31 @@ INSERT INTO `attractions` (`id`, `name`, `location`, `price`, `path_img`, `descr
 (5, 'Torre de Londres', 'London EC3N 4AB', 34.80, 'images/66fdb1fa945f8.jpg', 'La Torre de Londres es uno de los monumentos históricos más destacados e intrigantes que ver en Londres. Este castillo medieval se encuentra ubicado en la ribera norte del río Támesis y cuenta con una larga historia de casi mil años. En tu visita a la Torre de Londres es importante que sepas que ha tenido diversos usos desde residencia real, arsenal hasta fortaleza y prisión.\r\nLa verdad es que esta torre está envuelta de enigmas por lo que la mejor forma para descubrirlos es realizar el tour de los misterios y leyendas de Londres. Te advertimos que quizás se te pongan los pelos de punta.', '09:00:00', '17:30:00', 'https://www.hrp.org.uk/tower-of-london/', 1),
 (6, 'Abadía de Westminster', 'Deans, Yard London SW1P 3PA', 34.80, 'images/66fdb20b88a1a.jpg', 'Si quieres realizar un tour completo de Londres no puede faltar en tu itinerario visitar la Abadía de Westminster que su nombre completo es colegiata de San Pedro en Westminster. Este impresionante edificio de estilo gótico es uno de los edificios religiosos más importantes de todo Reino Unido y lugar de sepultura de numerosos monarcas ingleses a lo largo de la historia. Recuerda que con la London Pass tienes el acceso gratuito a la abadía.', '09:00:00', '17:00:00', 'https://tickets.westminster-abbey.org/', 1),
 (7, 'Jardines de Luxemburgo', '75006 Paris', 0.00, 'images/66fdb23d1abb2.jpg', 'Los Jardines de Luxemburgo se encuentran ubicados en el distrito XVI de París y para nosotros es una de las zonas verdes más bonitas de la capital francesa. Estos jardines fueron diseñados a principios del siglo XVII por órdenes de María de Médicis. Cuentan con una parte diseñada al estilo inglés y otra parte de estilo francés.', '00:00:00', '00:00:00', 'https://jardin.senat.fr/', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `language` varchar(50) NOT NULL,
+  `currency` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `name`, `language`, `currency`) VALUES
+(1, 'Inglaterra', 'Inglés', 'Libra Esterlina (£)'),
+(2, 'Francia', 'Francés', 'Euro (€)'),
+(4, 'Italia', 'Italiano', 'Euro (€)'),
+(14, 'Argentina', 'Español', 'Peso Argentino ($)'),
+(15, 'Mexico', 'Español', 'Peso Mexicano ($)'),
+(19, 'Chile', 'Español', 'Pesos Chileno ($)');
 
 -- --------------------------------------------------------
 
@@ -132,7 +131,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attractions`
 --
 ALTER TABLE `attractions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `countries`

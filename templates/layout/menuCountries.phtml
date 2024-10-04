@@ -1,10 +1,23 @@
-<div class="pt-4 pl-4">
-    <a class=" btn btn-danger m-1" href="<?php echo BASE_URL . "atracciones" ?>">
-        Todos
-    </a>
-    <?php foreach ($countries as $country): ?>
-        <a class="btn btn-danger m-1" href="<?php echo BASE_URL . 'atracciones-por-pais/' . $country->name ?>"> <?php echo htmlspecialchars($country->name); ?></a>
-    <?php endforeach; ?>
+<div class="p-4" style="display:flex;justify-content:space-between">
+    <div class="dropdown " style="display:flex;justify-content:space-between; align-items:center;">
+        Filtrar por país:
+        <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left:5px;">
+            <?php echo htmlspecialchars($selectedCountry); ?>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <li><a href="<?php echo BASE_URL . 'atracciones'; ?>" class="dropdown-item">Todos</a></li>
+            <?php foreach ($countries as $country): ?>
+                <li>
+                    <a href="<?php echo BASE_URL . 'atracciones-por-pais/' . $country->name; ?>" class="dropdown-item">
+                        <?php echo htmlspecialchars($country->name); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div style="padding:20px;display:flex; justify-content:space-between">
+        <?php if (isset($_SESSION['USER_ID'])) : ?>
+            <a href="<?php echo BASE_URL . 'nueva-atraccion' ?>" type="button" class="btn btn-danger" style="border-radius:25px">AGREGAR ATRACCION</a>
+        <?php endif ?>
+    </div>
 </div>
-</div>
-

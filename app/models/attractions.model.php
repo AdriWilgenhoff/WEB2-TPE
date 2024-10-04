@@ -56,5 +56,9 @@ class AttractionModel extends Model {
         move_uploaded_file($image['tmp_name'], $newFilePath);
         return $newFilePath;
     }
-	
+	public function getAttractionByName($name) {
+        $query = $this->db->prepare('SELECT * FROM attractions WHERE name = ? LIMIT 1');
+        $query->execute([$name]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
 }

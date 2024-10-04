@@ -12,7 +12,7 @@ class AttractionsController
     private $countryModel;
 
     public function __construct(){
-		AuthHelper::init();
+        AuthHelper::init();
         $this->attractionModel = new AttractionModel();
         $this->countryModel = new CountryModel();
         $this->layoutView = new LayoutView();
@@ -23,33 +23,51 @@ class AttractionsController
     public function showAttractions(){
         $attractions = $this->attractionModel->getAttractions();
         $countries = $this->countryModel->getCountries();
-        $this->attractionsView->showAllAtractions($attractions,$countries);
+        $selectedCountry = $this->getSelectedCountry();
+        $error = null;
+        if (!empty($attractions)) {
+            $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
+        }
     }
 
 
     public function addAttraction(){
-		AuthHelper::verify();
-         $validations = $this->validateAndSanitizeFields(['name','location','price','description','open_time','close_time','website']);
+        AuthHelper::verify();
+
+        $validations = $this->validateAndSanitizeFields(['name', 'location', 'price', 'description', 'open_time', 'close_time', 'website']);
+
         if ($validations) {
-			if($_FILES['path_img']['type'] == "image/jpg" || $_FILES['path_img']['type'] == "image/jpeg" || $_FILES['path_img']['type'] == "image/png" ) {
-                
-				$id = $this->attractionModel->addAttraction($_POST['name'], $_POST['location'], $_POST['price'], $_FILES['path_img'], $_POST['description'], $_POST['open_time'], $_POST['close_time'], $_POST['website'], $_POST['country_id']);
-            }else{
-				$id = $this->attractionModel->addAttraction($_POST['name'], $_POST['location'], $_POST['price'], null, $_POST['description'], $_POST['open_time'], $_POST['close_time'], $_POST['website'], $_POST['country_id']);
-            }         
+
+            $image = $this->validateImage($_FILES['path_img']);
+
+            $officialWebsite = $this->validateAndFormatWebsite($_POST['website']);
+
+
+            $id = $this->attractionModel->addAttraction(
+                $_POST['name'],
+                $_POST['location'],
+                $_POST['price'],
+                $image, // Puede ser un archivo o null
+                $_POST['description'],
+                $_POST['open_time'],
+                $_POST['close_time'],
+                $officialWebsite,
+                $_POST['country_id']
+            );
+
             if ($id) {
-                header('Location: ' . BASE_URL);
+                header('Location: ' . BASE_URL . 'atracciones');
             } else {
                 $this->layoutView->showError('No se pudo agregar la atracción');
             }
-        }else{
-				$this->layoutView->showError('No se pudo agregar la atracción. Faltan completar datos');
-			}
+        } else {
+            $this->layoutView->showError('No se pudo agregar la atracción. Faltan completar datos');
+        }
     }
 
 
     public function deleteAttraction($id){
-		AuthHelper::verify();
+        AuthHelper::verify();
         $attraction = $this->attractionModel->getAttractionById($id);
         if (!$attraction)
             return $this->layoutView->showError("No se pudo eliminar, la atracción no existe");
@@ -58,41 +76,58 @@ class AttractionsController
     }
 
 
-    public function showAttraction($id){     
+    public function showAttraction($id){
         $attraction = $this->attractionModel->getAttractionById($id);
         return $this->attractionsView->showAttraction($attraction);
     }
 
 
+
     public function updateAttraction($attractionId){
-		AuthHelper::verify();
-        $validations = $this->validateAndSanitizeFields(['name','location','price','description','open_time','close_time','website']);
+        AuthHelper::verify();
+        $validations = $this->validateAndSanitizeFields(['name', 'location', 'price', 'description', 'open_time', 'close_time', 'website']);
+        
         if ($validations) {
-			if($_FILES['path_img']['type'] == "image/jpg" || $_FILES['path_img']['type'] == "image/jpeg" || $_FILES['path_img']['type'] == "image/png" ) {          
-				$id = $this->attractionModel->updateAttraction($_POST['name'], $_POST['location'], $_POST['price'], $_FILES['path_img'], $_POST['description'], $_POST['open_time'], $_POST['close_time'], $_POST['website'], $_POST['country_id'], $attractionId);
-            }else{
-				$id = $this->attractionModel->updateAttraction($_POST['name'], $_POST['location'], $_POST['price'], null, $_POST['description'], $_POST['open_time'], $_POST['close_time'], $_POST['website'], $_POST['country_id'], $attractionId);
+            if ($this->isDuplicateName($_POST['name'], $attractionId)) {
+                $this->layoutView->showError('Este nombre ya está en uso');
+                return;
             }
-            if ($id) {        
+            $image = $this->validateImage($_FILES['path_img']);
+            $officialWebsite = $this->validateAndFormatWebsite($_POST['website']);
+
+            $id = $this->attractionModel->updateAttraction(
+                $_POST['name'],
+                $_POST['location'],
+                $_POST['price'],
+                $image,
+                $_POST['description'],
+                $_POST['open_time'],
+                $_POST['close_time'],
+                $officialWebsite,
+                $_POST['country_id'],
+                $attractionId
+            );
+
+
+            if ($id) {
                 header('Location: ' . BASE_URL . "atraccion/" . $attractionId);
             } else {
                 $this->layoutView->showError('No se pudo editar la atracción');
             }
-        }else{
-				$this->layoutView->showError('No se pudo editar la atracción, faltan completar datos');
-			}
+        } else {
+            $this->layoutView->showError('No se pudo editar la atracción, faltan completar datos');
+        }
     }
 
-
     public function showFormAddAttraction(){
-		AuthHelper::verify();
+        AuthHelper::verify();
         $countries = $this->countryModel->getCountries();
         return $this->attractionsView->showFormAddAttraction($countries);
     }
 
 
     public function showFormUpdateAttraction($id){
-		AuthHelper::verify();
+        AuthHelper::verify();
         $attraction = $this->attractionModel->getAttractionById($id);
         if (!$attraction) {
             return $this->layoutView->showError("No existe la atracción");
@@ -100,13 +135,13 @@ class AttractionsController
         $countries = $this->countryModel->getCountries();
         return $this->attractionsView->showFormUpdate($attraction, $countries);
     }
-	
-	
-	function validateAndSanitizeFields($fields){
+
+
+    function validateAndSanitizeFields($fields){
         foreach ($fields as $field) {
             if (!isset($_POST[$field]) || empty($_POST[$field]))
                 return false;
-			$_POST[$field] = htmlspecialchars($_POST[$field], ENT_QUOTES, 'UTF-8');
+            $_POST[$field] = htmlspecialchars($_POST[$field], ENT_QUOTES, 'UTF-8');
         }
         return true;
     }
@@ -115,8 +150,61 @@ class AttractionsController
     public function filterByCountry($country){
         $countries = $this->countryModel->getCountries();
         $attractions = $this->attractionModel->getAttractionByCountry($country);
-        return $this->attractionsView->showAllAtractions($attractions,$countries);    
+        $selectedCountry = $this->getSelectedCountry();
+        $error = null;
+
+        if (empty($attractions)) {
+            $error = 'Oops, no hemos encontrado atracciones';
+        }
+
+        $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
     }
-   
-	
+
+    public function getSelectedCountry(){
+
+        if (isset($_GET['action'])) {
+            $action = $_GET['action'];
+
+
+            if (empty($action)) {
+                return 'Todos';
+            }
+
+
+            $params = explode('/', $action);
+
+
+            if (isset($params[1])) {
+                return htmlspecialchars($params[1]);
+            }
+
+
+            return 'Todos';
+        } else {
+
+            return 'Todos';
+        }
+    }
+
+
+    private function validateImage($img){
+        if (isset($img) && ($img['type'] == "image/jpg" || $img['type'] == "image/jpeg" || $img['type'] == "image/png")) {
+            return $img;
+        }
+        return null; // Devolver null si no se subió o no es válida
+    }
+
+
+    private function validateAndFormatWebsite($website){
+        $website = trim($website);
+        if (!str_contains($website, 'http://') && !str_contains($website, 'https://')) {
+            $website = 'https://' . $website;
+        }
+        return $website;
+    }
+
+    private function isDuplicateName($name, $attractionId){
+        $existingAttraction = $this->attractionModel->getAttractionByName($name);
+        return $existingAttraction && $existingAttraction->id != $attractionId;
+    }
 }
