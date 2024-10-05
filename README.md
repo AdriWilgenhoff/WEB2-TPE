@@ -15,4 +15,4 @@ El diagrama tiene una relación de forma tal que una atraccion pertenece solo a 
 
 ![Diagrama de Entidad-Relacion](database/Diagrama-Entidad-Relacion.png)
 
-Para desplegar el proyecto localmente debe clonar el repositorio en la carpeta htdocs. Luego, abrir un navegador y dirigirse a la URL http://localhost/WEB2-TPE
+Para desplegar el proyecto localmente debe clonar el repositorio en la carpeta htdocs. Luego abrir un navegador y dirigirse a la URL http://localhost/WEB2-TPE
