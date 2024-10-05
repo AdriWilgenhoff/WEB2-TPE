@@ -15,46 +15,4 @@ El diagrama tiene una relación de forma tal que una atraccion pertenece solo a 
 
 ![Diagrama de Entidad-Relacion](database/Diagrama-Entidad-Relacion.png)
 
-/project-root
-    /app
-        /controllers
-            attractions.controller.php       
-            auth.controller.php
-            country.controller.php
-                
-        /helpers
-        /models
-            attractions.model.php         
-            country.model.php         
-            db.model.php            
-            user.model.php
-                
-        /views
-			attractions.view.php
-			country.view.php
-			layout.view.php
-			users.view.php
-    /images     
-    /config
-        config.php
-    /database
-        destinos_turisticos.sql
-    /templates
-        /attractions
-            form-addAttraction.phtml
-            form-updateAttraction.phtml
-            showAttractions.phtml
-            showAttractionDetail.phtml
-        /countries
-            form-addCountry.phtml
-            form-updateCountry.phtml
-            showCountries.phtml
-            showCountryDetail.phtml
-        /layout
-            error.phtml
-            footer.phtml
-            header.phtml
-            succes.phtml
-        /users
-            form-login.phtml        
-    /router.php
+Para desplegar el proyecto localmente debe clonar el repositorio en la carpeta htdocs. Luego, abrir un navegador y dirigirse a la URL http://localhost/WEB2-TPE
