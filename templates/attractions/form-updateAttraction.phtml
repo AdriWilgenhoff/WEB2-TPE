@@ -37,7 +37,7 @@
 
             <div class="mb-3">
                 <label for="website" class="form-label">Página Oficial</label>
-                <input class="form-control" type="text" name="website" maxlength="255" value="<?php echo $attraction->website; ?>" required>
+                <input class="form-control" type="url" name="website" maxlength="255" value="<?php echo $attraction->website; ?>" required>
             </div>
 
             <input type="hidden" name="id" value="<?php echo $attraction->id; ?>">

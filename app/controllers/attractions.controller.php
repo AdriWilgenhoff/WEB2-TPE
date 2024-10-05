@@ -19,52 +19,61 @@ class AttractionsController
         $this->attractionsView = new AttractionsView();
     }
 
-
     public function showAttractions(){
         $attractions = $this->attractionModel->getAttractions();
         $countries = $this->countryModel->getCountries();
         $selectedCountry = $this->getSelectedCountry();
         $error = null;
-        if (!empty($attractions)) {
+        if (!empty($attractions))
             $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
-        }
+    }
+	
+	public function showAttraction($id){
+        $attraction = $this->attractionModel->getAttractionById($id);
+        return $this->attractionsView->showAttraction($attraction);
+    }
+	
+	public function showFormAddAttraction(){
+        AuthHelper::verify();
+        $countries = $this->countryModel->getCountries();
+        return $this->attractionsView->showFormAddAttraction($countries);
     }
 
+    public function showFormUpdateAttraction($id){
+        AuthHelper::verify();
+        $attraction = $this->attractionModel->getAttractionById($id);
+        if (!$attraction)
+            return $this->layoutView->showError("No existe la atracción");
+        $countries = $this->countryModel->getCountries();
+        return $this->attractionsView->showFormUpdate($attraction, $countries);
+    }
 
     public function addAttraction(){
         AuthHelper::verify();
-
         $validations = $this->validateAndSanitizeFields(['name', 'location', 'price', 'description', 'open_time', 'close_time', 'website']);
-
         if ($validations) {
-
             $image = $this->validateImage($_FILES['path_img']);
-
             $officialWebsite = $this->validateAndFormatWebsite($_POST['website']);
-
-
-            $id = $this->attractionModel->addAttraction(
-                $_POST['name'],
-                $_POST['location'],
-                $_POST['price'],
-                $image, // Puede ser un archivo o null
-                $_POST['description'],
-                $_POST['open_time'],
-                $_POST['close_time'],
-                $officialWebsite,
-                $_POST['country_id']
-            );
-
-            if ($id) {
-                header('Location: ' . BASE_URL . 'atracciones');
-            } else {
-                $this->layoutView->showError('No se pudo agregar la atracción');
-            }
-        } else {
-            $this->layoutView->showError('No se pudo agregar la atracción. Faltan completar datos');
-        }
+			if (!$this->isDuplicateName($_POST['name'], null)){
+				$id = $this->attractionModel->addAttraction(
+					$_POST['name'],
+					$_POST['location'],
+					$_POST['price'],
+					$image,
+					$_POST['description'],
+					$_POST['open_time'],
+					$_POST['close_time'],
+					$officialWebsite,
+					$_POST['country_id']);
+				if ($id) 
+					header('Location: ' . BASE_URL . 'atracciones');
+				else
+					$this->layoutView->showError('No se pudo agregar la atracción');
+			} else
+				$this->layoutView->showError('El nombre de la atracción ya existe.');
+        } else
+            $this->layoutView->showError('No se pudo agregar la atracción, faltan completar datos.');
     }
-
 
     public function deleteAttraction($id){
         AuthHelper::verify();
@@ -75,26 +84,13 @@ class AttractionsController
         header('Location: ' . BASE_URL);
     }
 
-
-    public function showAttraction($id){
-        $attraction = $this->attractionModel->getAttractionById($id);
-        return $this->attractionsView->showAttraction($attraction);
-    }
-
-
-
     public function updateAttraction($attractionId){
         AuthHelper::verify();
-        $validations = $this->validateAndSanitizeFields(['name', 'location', 'price', 'description', 'open_time', 'close_time', 'website']);
-        
+        $validations = $this->validateAndSanitizeFields(['name', 'location', 'price', 'description', 'open_time', 'close_time', 'website']);     
         if ($validations) {
-            if ($this->isDuplicateName($_POST['name'], $attractionId)) {
-                $this->layoutView->showError('Este nombre ya está en uso');
-                return;
-            }
+            if (!$this->isDuplicateName($_POST['name'], $attractionId)) {       
             $image = $this->validateImage($_FILES['path_img']);
             $officialWebsite = $this->validateAndFormatWebsite($_POST['website']);
-
             $id = $this->attractionModel->updateAttraction(
                 $_POST['name'],
                 $_POST['location'],
@@ -105,37 +101,16 @@ class AttractionsController
                 $_POST['close_time'],
                 $officialWebsite,
                 $_POST['country_id'],
-                $attractionId
-            );
-
-
-            if ($id) {
+                $attractionId);
+            if ($id)
                 header('Location: ' . BASE_URL . "atraccion/" . $attractionId);
-            } else {
+            else 
                 $this->layoutView->showError('No se pudo editar la atracción');
-            }
-        } else {
-            $this->layoutView->showError('No se pudo editar la atracción, faltan completar datos');
-        }
+            } else
+				  $this->layoutView->showError('Este nombre ya está en uso');
+        } else
+              $this->layoutView->showError('No se pudo editar la atracción, faltan completar datos');
     }
-
-    public function showFormAddAttraction(){
-        AuthHelper::verify();
-        $countries = $this->countryModel->getCountries();
-        return $this->attractionsView->showFormAddAttraction($countries);
-    }
-
-
-    public function showFormUpdateAttraction($id){
-        AuthHelper::verify();
-        $attraction = $this->attractionModel->getAttractionById($id);
-        if (!$attraction) {
-            return $this->layoutView->showError("No existe la atracción");
-        }
-        $countries = $this->countryModel->getCountries();
-        return $this->attractionsView->showFormUpdate($attraction, $countries);
-    }
-
 
     function validateAndSanitizeFields($fields){
         foreach ($fields as $field) {
@@ -146,54 +121,38 @@ class AttractionsController
         return true;
     }
 
-
     public function filterByCountry($country){
         $countries = $this->countryModel->getCountries();
         $attractions = $this->attractionModel->getAttractionByCountry($country);
         $selectedCountry = $this->getSelectedCountry();
         $error = null;
-
-        if (empty($attractions)) {
+        if (empty($attractions))
             $error = 'Oops, no hemos encontrado atracciones';
-        }
-
         $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
     }
 
     public function getSelectedCountry(){
-
         if (isset($_GET['action'])) {
-            $action = $_GET['action'];
-
-
+            $action = $_GET['action'];	
             if (empty($action)) {
                 return 'Todos';
             }
-
-
             $params = explode('/', $action);
-
-
             if (isset($params[1])) {
                 return htmlspecialchars($params[1]);
             }
-
-
             return 'Todos';
         } else {
-
             return 'Todos';
         }
     }
-
 
     private function validateImage($img){
         if (isset($img) && ($img['type'] == "image/jpg" || $img['type'] == "image/jpeg" || $img['type'] == "image/png")) {
             return $img;
         }
-        return null; // Devolver null si no se subió o no es válida
+        return null;
     }
-
 
     private function validateAndFormatWebsite($website){
         $website = trim($website);
@@ -203,8 +162,14 @@ class AttractionsController
         return $website;
     }
 
-    private function isDuplicateName($name, $attractionId){
-        $existingAttraction = $this->attractionModel->getAttractionByName($name);
-        return $existingAttraction && $existingAttraction->id != $attractionId;
-    }
+	private function isDuplicateName($name, $attractionId) {
+		$existingAttraction = $this->attractionModel->getAttractionByName($name);
+		if ($existingAttraction) {
+			if ($attractionId)
+				return $existingAttraction->id != $attractionId;
+		    else
+				return true;
+		}
+		return false;
+	}
 }

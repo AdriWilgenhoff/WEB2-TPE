@@ -19,24 +19,17 @@ class CountryController
 
     function showCountries(){
         AuthHelper::verify();
-        $countries = $this->countryModel->getCountries();
-        $this->countryView->showCountries($countries);
+        $this->countryView->showCountries($this->countryModel->getCountries());
     }
-
-	function deleteCountry($id){
-        $country = $this->countryModel->getCountryById($id);
-        if (!empty($country)) {
-            $attractionsByCountry = new AttractionModel();
-			$attractions = $attractionsByCountry->getAttractionByCountry($country->name);
-            if (!empty($attractions)) {
-                $this->layoutView->showError('No es posible eliminar. El pais tiene atracciones.');
-				header('Refresh: 5; URL=' . BASE_URL . 'paises');
-            } else {
-                $this->countryModel->deleteCountry($id);
-				header('Location: ' . BASE_URL . 'paises');
-            }
-        } else 
-            $this->layoutView->showError('No se pudo eliminar, el pais no existe');    
+	
+	function showFormAddCountry(){
+        AuthHelper::verify();
+        return $this->countryView->showFormAddCountry();
+	}
+    	
+	function showFormUpdateCountry($id){
+        AuthHelper::verify();
+        return $this->countryView->showFormUpdateCountry($this->countryModel->getCountryById($id));
     }
   
     function addCountry(){
@@ -45,19 +38,15 @@ class CountryController
         if ($validation) {            
             if (!$this->isDuplicateName($_POST['name'],null)) {
                 $id = $this->countryModel->addCountry($_POST['name'], $_POST['language'], $_POST['currency']);
-                if ($id) {
+                if ($id)
                     header('Location: ' . BASE_URL . 'paises');
-                } else {
+                else 
                     $this->layoutView->showError('No se pudo agregar el país.');
-                }
-            } else {
-                $this->layoutView->showError('El nombre del país ya existe.');
-            }
-        } else {
-            $this->layoutView->showError('No se pudo agregar el país, faltan completar datos.');
-        }
+            } else
+				  $this->layoutView->showError('El nombre del país ya existe.');
+        } else
+			  $this->layoutView->showError('No se pudo agregar el país, faltan completar datos.');
     }
-
 
     function updateCountry($id){
         AuthHelper::verify();
@@ -65,15 +54,29 @@ class CountryController
         if ($validation) {
             if (!$this->isDuplicateName($_POST['name'], $id)) {
                 $this->countryModel->updateCountry($_POST['name'], $_POST['language'], $_POST['currency'], $id);
-                header('Location: ' . BASE_URL . 'paises');
-            } else {
-                $this->layoutView->showError('El nombre del país ya existe.');
-            }
-        } else {
-            $this->layoutView->showError('No se pudo modificar el país, faltan completar datos.');
-        }
+				header('Location: ' . BASE_URL . 'paises');
+            } else
+                  $this->layoutView->showError('El nombre del país ya existe.');
+        } else
+			  $this->layoutView->showError('No se pudo modificar el país, faltan completar datos.');
     }
     
+	function deleteCountry($id){
+		AuthHelper::verify();
+        $country = $this->countryModel->getCountryById($id);
+        if (!empty($country)) {
+            $attractionsByCountry = new AttractionModel();
+			$attractions = $attractionsByCountry->getAttractionByCountry($country->name);
+            if (!empty($attractions)) {
+                $this->layoutView->showError('No es posible eliminar. El pais tiene atracciones.');
+            } else {
+                $this->countryModel->deleteCountry($id);
+				header('Location: ' . BASE_URL . 'paises');
+              }
+        } else 
+            $this->layoutView->showError('No se pudo eliminar, el pais no existe');    
+    }
+	
     function validateAndSanitizeFields($fields){
         foreach ($fields as $field) {
             if (!isset($_POST[$field]) || empty($_POST[$field]))
@@ -82,25 +85,16 @@ class CountryController
         }
         return true;
     }
-		
-    function showFormAddCountry(){
-        AuthHelper::verify();
-        return $this->countryView->showFormAddCountry();
+		    
+    private function isDuplicateName($name, $countryId) {
+		$existingCountry = $this->countryModel->getCountryByName($name);
+		if ($existingCountry) {
+			if ($countryId)
+				return $existingCountry->id != $countryId;
+		    else
+				return true;
+		}
+		return false;
 	}
-    	
-	function showFormUpdateCountry($id){
-        AuthHelper::verify();
-        $country = $this->countryModel->getCountryById($id);
-        return $this->countryView->showFormUpdateCountry($country);
-    }
-    
-    private function isDuplicateName($name, $countryId = null){
-        $existingCountry = $this->countryModel->getCountryByName($name);
-        if ($existingCountry) {
-            return $countryId ? $existingCountry->id != $countryId : true;
-        }
-        return false;
-    }
-
 
 }

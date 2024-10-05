@@ -5,9 +5,8 @@ class AttractionsView {
     public function showAllAtractions($attractions,$countries,$selectedCountry,$error){
         require './templates/layout/header.phtml';
         require './templates/layout/menuCountries.phtml';
-        if($error){
+        if($error)
             include_once './templates/layout/boxError.phtml';
-        }
         require './templates/attractions/showAtractions.phtml';
         require './templates/layout/footer.phtml';
     }
@@ -27,8 +26,7 @@ class AttractionsView {
     public function showFormUpdate($attraction,$countries){
         require './templates/layout/header.phtml';
         require './templates/attractions/form-updateAttraction.phtml';
-        require './templates/layout/footer.phtml';
-        
+        require './templates/layout/footer.phtml'; 
     } 
     
     public function showFormAddAttraction($countries){
