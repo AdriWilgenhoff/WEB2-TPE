@@ -124,8 +124,7 @@
 			break;
 		
 		default:
-			$controler = new AttractionsController();
 			$layoutView = new LayoutView();
-			$layoutView->showError404();  // está mal
+			$layoutView->showError404();
 			break;
 	}
