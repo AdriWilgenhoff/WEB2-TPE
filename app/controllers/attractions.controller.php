@@ -24,8 +24,9 @@ class AttractionsController
         $countries = $this->countryModel->getCountries();
         $selectedCountry = $this->getSelectedCountry();
         $error = null;
-        if (!empty($attractions))
-            $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
+		if (empty($attractions))
+            $error = 'Oops, no hemos encontrado atracciones';
+        $this->attractionsView->showAllAtractions($attractions, $countries, $selectedCountry, $error);
     }
 	
 	public function showAttraction($id){
