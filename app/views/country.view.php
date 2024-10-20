@@ -15,13 +15,13 @@ class CountryView{
 	
     public function showFormUpdateCountry($country){
         require './templates/layout/header.phtml'; 
-        require './templates/countries/form-updateCountry.phtml';
+        require './templates/countries/formUpdateCountry.phtml';
         require './templates/layout/footer.phtml';    
     } 
     
     public function showFormAddCountry(){
         require './templates/layout/header.phtml'; 
-        require './templates/countries/form-addCountry.phtml';
+        require './templates/countries/formAddCountry.phtml';
         require './templates/layout/footer.phtml';
     }
 }

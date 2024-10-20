@@ -25,13 +25,13 @@ class AttractionsView {
 
     public function showFormUpdate($attraction,$countries){
         require './templates/layout/header.phtml';
-        require './templates/attractions/form-updateAttraction.phtml';
+        require './templates/attractions/formUpdateAttraction.phtml';
         require './templates/layout/footer.phtml'; 
     } 
     
     public function showFormAddAttraction($countries){
         require './templates/layout/header.phtml';
-        require './templates/attractions/form-addAttraction.phtml';
+        require './templates/attractions/formAddAttraction.phtml';
         require './templates/layout/footer.phtml';
     }
 }
